@@ -1,3 +1,4 @@
+import { HomePage } from './../home/home';
 import { User } from './../../models/user.model';
 import { AuthService } from './../../providers/auth.service';
 import { UserService } from './../../providers/user.service';
@@ -56,6 +57,7 @@ export class SignupPage {
             this.userService.create(formUser)
               .then(() => {
                 console.log("usuario cadastrado");
+                this.navCtrl.setRoot(HomePage);
                 loading.dismiss();
               }).catch((err: any) => {
                 console.log(err);
