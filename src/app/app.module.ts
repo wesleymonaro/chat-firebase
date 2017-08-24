@@ -8,7 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 
-import { AngularFireModule, FirebaseAppConfig } from 'angularfire2';
+import { AngularFireModule, FirebaseAppConfig, AuthProviders, AuthMethods } from 'angularfire2';
 
 import { SignupPage } from './../pages/signup/signup';
 import { UserService } from '../providers/user.service';
@@ -22,6 +22,11 @@ const firebaseAppConfig : FirebaseAppConfig = {
     messagingSenderId: "867278605639"
   };
 
+  const firebaseAuthConfig = {
+    provider : AuthProviders.Custom,
+    method : AuthMethods.Password
+  }
+
 @NgModule({
   declarations: [
     MyApp,
@@ -32,7 +37,7 @@ const firebaseAppConfig : FirebaseAppConfig = {
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseAppConfig)
+    AngularFireModule.initializeApp(firebaseAppConfig, firebaseAuthConfig)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
