@@ -52,15 +52,15 @@ export class SignupPage {
         .then(() => {
           console.log("usuario cadastrado");
           loading.dismiss();
-        }).catch((err: Error) => {
+        }).catch((err: any) => {
           console.log(err);
           loading.dismiss();
-          this.showAlert(err.message)
+          this.showAlert(err)
         })
-    }).catch((err: Error) => {
+    }).catch((err: any) => {
       console.log(err);
       loading.dismiss();
-      this.showAlert(err.message)
+      this.showAlert(err)
     })
   }
 
