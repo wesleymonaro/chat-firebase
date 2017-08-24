@@ -9,6 +9,8 @@ import { HomePage } from '../pages/home/home';
 
 import { AngularFireModule, FirebaseAppConfig } from 'angularfire2';
 
+import { SignupPage } from './../pages/signup/signup';
+
 const firebaseAppConfig : FirebaseAppConfig = {
     apiKey: "AIzaSyCvI6cdRxsFtQei70islw2HioAiN4t3PKo",
     authDomain: "ionic2-firebase-chat-7e814.firebaseapp.com",
@@ -20,7 +22,8 @@ const firebaseAppConfig : FirebaseAppConfig = {
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    SignupPage
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,8 @@ const firebaseAppConfig : FirebaseAppConfig = {
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    SignupPage
   ],
   providers: [
     StatusBar,
