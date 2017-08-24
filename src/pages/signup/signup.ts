@@ -39,29 +39,39 @@ export class SignupPage {
 
     let loading: Loading = this.showLoading();
     let formUser = this.signupForm.value;
+    let username: string = formUser.username;
 
-    this.authService.createAuthUser({
-      email: formUser.email,
-      password: formUser.password
-    }).then((authState: FirebaseAuthState) => {
+    this.userService.userExists(username)
+      .first()
+      .subscribe((userExists: boolean) => {
+        if (!userExists) {
+          this.authService.createAuthUser({
+            email: formUser.email,
+            password: formUser.password
+          }).then((authState: FirebaseAuthState) => {
 
-      delete formUser.password;
-      formUser.uid = authState.auth.uid;
+            delete formUser.password;
+            formUser.uid = authState.auth.uid;
 
-      this.userService.create(formUser)
-        .then(() => {
-          console.log("usuario cadastrado");
+            this.userService.create(formUser)
+              .then(() => {
+                console.log("usuario cadastrado");
+                loading.dismiss();
+              }).catch((err: any) => {
+                console.log(err);
+                loading.dismiss();
+                this.showAlert(err)
+              })
+          }).catch((err: any) => {
+            console.log(err);
+            loading.dismiss();
+            this.showAlert(err)
+          })
+        } else {
+          this.showAlert(`O username ${username} ja esta sendo usado em outra conta`);
           loading.dismiss();
-        }).catch((err: any) => {
-          console.log(err);
-          loading.dismiss();
-          this.showAlert(err)
-        })
-    }).catch((err: any) => {
-      console.log(err);
-      loading.dismiss();
-      this.showAlert(err)
-    })
+        }
+      })
   }
 
   private showLoading(): Loading {
