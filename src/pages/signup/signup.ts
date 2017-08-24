@@ -2,7 +2,7 @@ import { User } from './../../models/user.model';
 import { AuthService } from './../../providers/auth.service';
 import { UserService } from './../../providers/user.service';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Loading, LoadingController, AlertController } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { FirebaseAuthState } from "angularfire2";
 
@@ -16,11 +16,13 @@ export class SignupPage {
   signupForm: FormGroup;
 
   constructor(
+    public alertCtrl: AlertController,
     public authService: AuthService,
     public formBuilder: FormBuilder,
+    public loadingCtrl: LoadingController,
     public navCtrl: NavController,
     public navParams: NavParams,
-    public userService: UserService
+    public userService: UserService,
   ) {
 
     let emailRegex = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
@@ -35,6 +37,7 @@ export class SignupPage {
 
   onSubmit(): void {
 
+    let loading: Loading = this.showLoading();
     let formUser = this.signupForm.value;
 
     this.authService.createAuthUser({
@@ -48,8 +51,33 @@ export class SignupPage {
       this.userService.create(formUser)
         .then(() => {
           console.log("usuario cadastrado");
+          loading.dismiss();
+        }).catch((err: Error) => {
+          console.log(err);
+          loading.dismiss();
+          this.showAlert(err.message)
         })
+    }).catch((err: Error) => {
+      console.log(err);
+      loading.dismiss();
+      this.showAlert(err.message)
     })
+  }
+
+  private showLoading(): Loading {
+    let loading: Loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+
+    loading.present();
+    return loading;
+  }
+
+  private showAlert(message: string): void {
+    this.alertCtrl.create({
+      message: message,
+      buttons: ['Ok']
+    }).present();
   }
 
 }
