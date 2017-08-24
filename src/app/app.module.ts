@@ -1,3 +1,4 @@
+import { SigninPage } from './../pages/signin/signin';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -25,6 +26,7 @@ const firebaseAppConfig : FirebaseAppConfig = {
   declarations: [
     MyApp,
     HomePage,
+    SigninPage,
     SignupPage
   ],
   imports: [
@@ -36,6 +38,7 @@ const firebaseAppConfig : FirebaseAppConfig = {
   entryComponents: [
     MyApp,
     HomePage,
+    SigninPage,
     SignupPage
   ],
   providers: [
