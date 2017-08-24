@@ -1,6 +1,5 @@
 import { AngularFire } from 'angularfire2';
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { User } from './../models/user.model';
@@ -9,7 +8,6 @@ import { User } from './../models/user.model';
 export class UserService {
 
   constructor(
-    public http: Http,
     public af : AngularFire  
   ) {
     console.log('Hello UserProvider Provider');

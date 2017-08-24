@@ -1,3 +1,4 @@
+import { UserService } from './../../providers/user.service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
@@ -15,6 +16,7 @@ export class SignupPage {
     public formBuilder : FormBuilder,
     public navCtrl: NavController, 
     public navParams: NavParams,
+    public userService : UserService
   ) {
 
     let emailRegex = /^[a-z0-9!#$%&'*+\/=?^_`{|}~.-]+@[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)*$/i;
@@ -28,6 +30,10 @@ export class SignupPage {
   }
 
   onSubmit() : void {
+    this.userService.create(this.signupForm.value)
+      .then(() => {
+        console.log("usuario cadastrado");
+      })
 
   }
 
