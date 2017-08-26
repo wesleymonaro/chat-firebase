@@ -7,6 +7,7 @@ import { AuthService } from './../../providers/auth.service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import firebase from 'firebase';
 
 @Component({
   selector: 'page-chat',
@@ -35,9 +36,12 @@ export class ChatPage {
   ionViewDidLoad() {
     this.recipient = this.navParams.get('recipientUser');
     this.pageTitle = this.recipient.name;
+   
     this.userService.currentUser
       .first()
       .subscribe((currentUser: User) => {
+        this.sender = currentUser;
+        
         this.messages = this.messageService
           .getMessages(this.sender.$key, this.recipient.$key);
 
@@ -53,7 +57,19 @@ export class ChatPage {
   }
 
   sendMessage(newMessage: string): void {
-    this.messages.push(newMessage);
+
+    if (newMessage) {
+      let timestamp: Object = firebase.database.ServerValue.TIMESTAMP;
+
+      this.messageService.create(
+        new Message(
+          this.sender.$key,
+          newMessage,
+          timestamp
+        ),
+        this.messages
+      );
+    }
   }
 
 }
