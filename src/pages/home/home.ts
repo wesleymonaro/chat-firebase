@@ -1,3 +1,4 @@
+import { ChatPage } from './../chat/chat';
 import { AuthService } from './../../providers/auth.service';
 import { UserService } from './../../providers/user.service';
 import { User } from './../../models/user.model';
@@ -37,7 +38,9 @@ export class HomePage {
 
   onChatCreate(user : User) : void {
     console.log(user);
-    
+    this.navCtrl.push(ChatPage, {
+      recipientUser : user
+    });
   }
 
 }
