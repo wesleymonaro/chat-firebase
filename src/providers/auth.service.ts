@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import 'rxjs/add/operator/first';
 import 'rxjs/add/operator/map';
 import { AngularFireAuth, FirebaseAuthState } from "angularfire2";
 import { BaseService } from "./base.service";
@@ -30,6 +31,16 @@ export class AuthService extends BaseService{
 
   logout() : Promise<void>{
     return this.auth.logout();
+  }
+
+  get authenticated(): Promise<boolean>{
+    return new Promise((resolve, reject) => {
+      this.auth
+        .first()
+        .subscribe((authState : FirebaseAuthState) => {
+          (authState) ? resolve(true) : reject(false);
+        });
+    })
   }
 
 }

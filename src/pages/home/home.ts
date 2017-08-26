@@ -1,3 +1,4 @@
+import { AuthService } from './../../providers/auth.service';
 import { UserService } from './../../providers/user.service';
 import { User } from './../../models/user.model';
 import { FirebaseListObservable } from 'angularfire2';
@@ -14,10 +15,15 @@ export class HomePage {
   users : FirebaseListObservable<User[]>;
 
   constructor(
+    public authService : AuthService,
     public navCtrl: NavController,
     public userService : UserService
   ) {
 
+  }
+
+  ionViewCanEnter(): Promise<boolean>{
+    return this.authService.authenticated;
   }
 
   ionViewDidLoad(){
