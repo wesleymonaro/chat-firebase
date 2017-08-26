@@ -1,3 +1,4 @@
+import { CustomLoggedHeaderComponent } from './../components/custom-logged-header/custom-logged-header.component';
 import { SigninPage } from './../pages/signin/signin';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -29,8 +30,9 @@ const firebaseAppConfig : FirebaseAppConfig = {
 
 @NgModule({
   declarations: [
-    MyApp,
+    CustomLoggedHeaderComponent,
     HomePage,
+    MyApp,
     SigninPage,
     SignupPage
   ],
@@ -41,8 +43,8 @@ const firebaseAppConfig : FirebaseAppConfig = {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
     HomePage,
+    MyApp,
     SigninPage,
     SignupPage
   ],
