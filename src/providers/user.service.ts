@@ -1,5 +1,4 @@
-import { FirebaseAuthState } from 'angularfire2';
-import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import { AngularFire, FirebaseAuthState, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 
@@ -17,15 +16,25 @@ export class UserService extends BaseService{
     public af : AngularFire  
   ) {
     super();
-    this.users = this.af.database.list(`/users`);
     this.listenAuthState();
+  }
+
+  private setUsers(uidToExclude : string) : void{
+    this.users = <FirebaseListObservable<User[]>>this.af.database.list(`/users`, {
+      query : {
+        orderByChild : 'name'
+      }
+    }).map((users : User[]) =>{
+      return users.filter((user : User) => user.$key != uidToExclude);
+    })
   }
 
   private listenAuthState() : void{
     this.af.auth
       .subscribe((authState : FirebaseAuthState) => {
         if(authState){
-          this.currentUser = this.af.database.object(`/users/${authState.auth.uid}`)
+          this.currentUser = this.af.database.object(`/users/${authState.auth.uid}`);
+          this.setUsers(authState.auth.uid);
         }
       })
   }
