@@ -18,9 +18,9 @@
   <div [ngSwitch]="view">
 
     <ion-list *ngSwitchCase="'chats'" no-lines>
-      <button ion-item *ngFor="let c of chats | async">
-        <h2>{{ c.title }}</h2>
-        <p *ngIf="c.lastMessage; else customMessage">{{ c.timestamp | date:'dd/MM/yyyy H:mm' }} - {{ c.lastMessage }}</p>
+      <button ion-item *ngFor="let chat of chats | async" (click)="onChatOpen(chat)">
+        <h2>{{ chat.title }}</h2>
+        <p *ngIf="chat.lastMessage; else customMessage">{{ chat.timestamp | date:'dd/MM/yyyy H:mm' }} - {{ c.lastMessage }}</p>
         <ng-template #customMessage>
           <p>No Messages</p>
         </ng-template>

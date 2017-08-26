@@ -17,43 +17,43 @@ import firebase from 'firebase';
 })
 export class HomePage {
 
-  chats : FirebaseListObservable<Chat[]>;
-  users : FirebaseListObservable<User[]>;
-  view : string = 'chats';
+  chats: FirebaseListObservable<Chat[]>;
+  users: FirebaseListObservable<User[]>;
+  view: string = 'chats';
 
   constructor(
-    public authService : AuthService,
-    public chatService : ChatService,
+    public authService: AuthService,
+    public chatService: ChatService,
     public navCtrl: NavController,
-    public userService : UserService
+    public userService: UserService
   ) {
 
   }
 
-  ionViewCanEnter(): Promise<boolean>{
+  ionViewCanEnter(): Promise<boolean> {
     return this.authService.authenticated;
   }
 
-  ionViewDidLoad(){
+  ionViewDidLoad() {
     this.chats = this.chatService.chats;
     this.users = this.userService.users;
   }
 
-  onSignup() : void{
+  onSignup(): void {
     this.navCtrl.push(SignupPage);
   }
 
-  onChatCreate(recipientUser : User) : void {
-    
+  onChatCreate(recipientUser: User): void {
+
     this.userService.currentUser
       .first()
-      .subscribe((currentUser : User) => {
+      .subscribe((currentUser: User) => {
         this.chatService.getDeepChat(currentUser.$key, recipientUser.$key)
           .first()
-          .subscribe((chat : Chat) => {
-            if(chat.hasOwnProperty('$value')){
+          .subscribe((chat: Chat) => {
+            if (chat.hasOwnProperty('$value')) {
 
-              let timestamp : Object = firebase.database.ServerValue.TIMESTAMP;
+              let timestamp: Object = firebase.database.ServerValue.TIMESTAMP;
 
               let chat1 = new Chat('', timestamp, recipientUser.name, '');
               this.chatService.create(chat1, currentUser.$key, recipientUser.$key);
@@ -66,8 +66,20 @@ export class HomePage {
       })
 
     this.navCtrl.push(ChatPage, {
-      recipientUser : recipientUser
+      recipientUser: recipientUser
     });
+  }
+
+  onChatOpen(chat: Chat): void {
+    let recipientUserId: string = chat.$key;
+
+    this.userService.get(recipientUserId)
+      .first()
+      .subscribe((user: User) => {
+        this.navCtrl.push(ChatPage, {
+          recipientUser : user
+        })
+      })
   }
 
 }
