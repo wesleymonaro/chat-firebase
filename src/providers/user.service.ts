@@ -1,4 +1,5 @@
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { FirebaseAuthState } from 'angularfire2';
+import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 
@@ -10,12 +11,23 @@ import { Observable } from "rxjs";
 export class UserService extends BaseService{
 
   users : FirebaseListObservable<User[]>;
+  currentUser : FirebaseObjectObservable<User>;
 
   constructor(
     public af : AngularFire  
   ) {
     super();
     this.users = this.af.database.list(`/users`);
+    this.listenAuthState();
+  }
+
+  private listenAuthState() : void{
+    this.af.auth
+      .subscribe((authState : FirebaseAuthState) => {
+        if(authState){
+          this.currentUser = this.af.database.object(`/users/${authState.auth.uid}`)
+        }
+      })
   }
 
   create(user : User, uuid : string) : firebase.Promise<void>{
