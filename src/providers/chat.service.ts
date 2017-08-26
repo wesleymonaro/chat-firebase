@@ -1,4 +1,4 @@
-import { AngularFire } from 'angularfire2';
+import { AngularFire, FirebaseObjectObservable } from 'angularfire2';
 import { Chat } from './../models/chat.model';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
@@ -19,6 +19,11 @@ export class ChatService extends BaseService {
     return this.af.database.object(`/chats/${userId1}/${userId2}`) 
       .set(chat)
       .catch(this.handlePromiseError);
+  }
+
+  getDeepChat(userId1 : string, userId2 : string) : FirebaseObjectObservable<Chat>{
+    return <FirebaseObjectObservable<Chat>>this.af.database.object(`/chats;${userId1}/${userId2}`)
+      .catch(this.handleObservableError);
   }
 
 }
