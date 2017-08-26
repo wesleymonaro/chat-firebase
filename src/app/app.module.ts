@@ -17,6 +17,7 @@ import { SignupPage } from './../pages/signup/signup';
 import { UserService } from '../providers/user.service';
 import { AuthService } from '../providers/auth.service';
 import { ChatService } from '../providers/chat.service';
+import { MessageService } from '../providers/message.service';
 
 const firebaseAppConfig : FirebaseAppConfig = {
     apiKey: "AIzaSyCvI6cdRxsFtQei70islw2HioAiN4t3PKo",
@@ -57,6 +58,7 @@ const firebaseAppConfig : FirebaseAppConfig = {
   providers: [
     AuthService,
     ChatService,
+    MessageService,
     StatusBar,
     SplashScreen,
     UserService,
