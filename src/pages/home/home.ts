@@ -17,6 +17,7 @@ import firebase from 'firebase';
 })
 export class HomePage {
 
+  chats : FirebaseListObservable<Chat[]>;
   users : FirebaseListObservable<User[]>;
   view : string = 'chats';
 
@@ -34,6 +35,7 @@ export class HomePage {
   }
 
   ionViewDidLoad(){
+    this.chats = this.chatService.chats;
     this.users = this.userService.users;
   }
 
