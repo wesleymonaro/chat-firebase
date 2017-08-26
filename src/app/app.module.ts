@@ -1,3 +1,4 @@
+import { CapitalizePipe } from './../pipes/capitalize.pipe';
 import { CustomLoggedHeaderComponent } from './../components/custom-logged-header/custom-logged-header.component';
 import { SigninPage } from './../pages/signin/signin';
 import { BrowserModule } from '@angular/platform-browser';
@@ -30,6 +31,7 @@ const firebaseAppConfig : FirebaseAppConfig = {
 
 @NgModule({
   declarations: [
+    CapitalizePipe,
     CustomLoggedHeaderComponent,
     HomePage,
     MyApp,
