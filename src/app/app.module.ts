@@ -1,3 +1,4 @@
+import { UserMenuComponent } from './../components/user-menu/user-menu.component';
 import { UserInfoComponent } from './../components/user-info/user-info.component';
 import { MessageBoxComponent } from './../components/message-box/message-box.component';
 import { ChatPage } from './../pages/chat/chat';
@@ -44,7 +45,8 @@ const firebaseAppConfig : FirebaseAppConfig = {
     MyApp,
     SigninPage,
     SignupPage,
-    UserInfoComponent
+    UserInfoComponent,
+    UserMenuComponent
   ],
   imports: [
     BrowserModule,
