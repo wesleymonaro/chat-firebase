@@ -10,15 +10,15 @@ import { NavController, NavParams } from 'ionic-angular';
 })
 export class UserProfilePage {
 
-  currentUser : User;
+  currentUser: User;
   canEdit: boolean = false;
-  private filePhoto : File;
+  private filePhoto: File;
 
   constructor(
     public authService: AuthService,
     public navCtrl: NavController,
     public navParams: NavParams,
-    public userService : UserService
+    public userService: UserService
   ) {
   }
 
@@ -27,27 +27,43 @@ export class UserProfilePage {
   }
 
   ionViewDidLoad() {
-    this.userService.currentUser.subscribe((user : User) =>{
+    this.userService.currentUser.subscribe((user: User) => {
       this.currentUser = user;
     })
   }
 
-  onSubmit(event : Event):void{
+  onSubmit(event: Event): void {
     event.preventDefault();
-    this.editUser();
+
+    if (this.filePhoto) {
+
+      let uploadTask = this.userService.uploadPhoto(this.filePhoto, this.currentUser.$key);
+
+      uploadTask.on('state_changed', (snapshot) => {
+
+      }, (error: Error) => {
+        //catch error
+      }, () => {
+        this.editUser(uploadTask.snapshot.downloadURL);
+      })
+
+    } else {
+      this.editUser();
+    }
   }
 
-  onPhoto(event): void{
+  onPhoto(event): void {
     this.filePhoto = event.target.files[0];
   }
 
-  private editUser(photoUrl?: string): void{
+  private editUser(photoUrl?: string): void {
     this.userService.edit({
       name: this.currentUser.name,
       username: this.currentUser.username,
       photo: photoUrl || this.currentUser.photo || ''
-    }).then(()=>{
+    }).then(() => {
       this.canEdit = false;
+      this.filePhoto = undefined;
     })
   }
 
