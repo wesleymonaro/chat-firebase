@@ -1,3 +1,4 @@
+import { MessageBoxComponent } from './../components/message-box/message-box.component';
 import { ChatPage } from './../pages/chat/chat';
 import { CapitalizePipe } from './../pipes/capitalize.pipe';
 import { CustomLoggedHeaderComponent } from './../components/custom-logged-header/custom-logged-header.component';
@@ -38,6 +39,7 @@ const firebaseAppConfig : FirebaseAppConfig = {
     ChatPage,
     CustomLoggedHeaderComponent,
     HomePage,
+    MessageBoxComponent,
     MyApp,
     SigninPage,
     SignupPage
