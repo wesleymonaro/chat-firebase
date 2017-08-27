@@ -6,8 +6,8 @@ import { UserService } from './../../providers/user.service';
 import { Message } from './../../models/message.model';
 import { User } from './../../models/user.model';
 import { AuthService } from './../../providers/auth.service';
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
 
 import firebase from 'firebase';
 
@@ -17,6 +17,7 @@ import firebase from 'firebase';
 })
 export class ChatPage {
 
+  @ViewChild(Content) content: Content;
   messages: FirebaseListObservable<Message[]>;
   pageTitle: string;
   sender: User;
@@ -49,6 +50,13 @@ export class ChatPage {
         this.chat1 = this.chatService.getDeepChat(this.sender.$key, this.recipient.$key);
         this.chat2 = this.chatService.getDeepChat(this.recipient.$key, this.sender.$key);
 
+        let doSubscription = () => {
+          this.messages
+            .subscribe((messages: Message[]) => {
+              this.scrollToBottom();
+            });
+        }
+
         this.messages = this.messageService
           .getMessages(this.sender.$key, this.recipient.$key);
 
@@ -58,6 +66,10 @@ export class ChatPage {
             if (messages.length == 0) {
               this.messages = this.messageService
                 .getMessages(this.recipient.$key, this.sender.$key);
+
+              doSubscription();
+            } else {
+              doSubscription();
             }
           })
       })
@@ -91,6 +103,14 @@ export class ChatPage {
 
       });
     }
+  }
+
+  private scrollToBottom(duration?: number): void {
+    setTimeout(() => {
+      if (this.content) {
+        this.content.scrollToBottom(duration || 300);
+      }
+    }, 50);
   }
 
 }
