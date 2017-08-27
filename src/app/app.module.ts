@@ -1,3 +1,4 @@
+import { UserInfoComponent } from './../components/user-info/user-info.component';
 import { MessageBoxComponent } from './../components/message-box/message-box.component';
 import { ChatPage } from './../pages/chat/chat';
 import { CapitalizePipe } from './../pipes/capitalize.pipe';
@@ -42,7 +43,8 @@ const firebaseAppConfig : FirebaseAppConfig = {
     MessageBoxComponent,
     MyApp,
     SigninPage,
-    SignupPage
+    SignupPage,
+    UserInfoComponent
   ],
   imports: [
     BrowserModule,
