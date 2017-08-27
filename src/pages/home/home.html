@@ -13,6 +13,10 @@
   </ion-toolbar>
 </ion-header>
 
+<ion-toolbar>
+  <ion-searchbar (ionInput)="filterItems($event)"></ion-searchbar>
+</ion-toolbar>
+
 <ion-content padding>
 
   <div [ngSwitch]="view">
