@@ -50,7 +50,9 @@ const firebaseAppConfig : FirebaseAppConfig = {
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      mode: 'ios'
+    }),
     AngularFireModule.initializeApp(firebaseAppConfig, firebaseAuthConfig)
   ],
   bootstrap: [IonicApp],
