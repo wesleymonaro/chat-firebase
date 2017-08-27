@@ -1,5 +1,5 @@
-import { AngularFire, FirebaseAuthState, FirebaseObjectObservable, FirebaseListObservable } from 'angularfire2';
-import { Injectable } from '@angular/core';
+import { AngularFire, FirebaseAuthState, FirebaseObjectObservable, FirebaseListObservable, FirebaseApp } from 'angularfire2';
+import { Injectable, Inject } from '@angular/core';
 import 'rxjs/add/operator/map';
 
 import { User } from './../models/user.model';
@@ -13,7 +13,8 @@ export class UserService extends BaseService{
   currentUser : FirebaseObjectObservable<User>;
 
   constructor(
-    public af : AngularFire  
+    public af : AngularFire,
+    @Inject(FirebaseApp) public firebaseApp : any
   ) {
     super();
     this.listenAuthState();
@@ -65,6 +66,14 @@ export class UserService extends BaseService{
   get(userId : string): FirebaseObjectObservable<User>{
     return <FirebaseObjectObservable<User>> this.af.database.object(`/users/${userId}`)
       .catch(this.handleObservableError);
+  }
+
+  uploadPhoto(file : File, userId: string): firebase.storage.UploadTask{
+    return this.firebaseApp
+    .storage()
+    .ref()
+    .child(`/users/${userId}`)
+    .put(file)
   }
 
 }
