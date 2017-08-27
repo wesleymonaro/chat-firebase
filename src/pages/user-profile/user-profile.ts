@@ -12,6 +12,7 @@ export class UserProfilePage {
 
   currentUser: User;
   canEdit: boolean = false;
+  uploadProgress: number;
   private filePhoto: File;
 
   constructor(
@@ -41,6 +42,8 @@ export class UserProfilePage {
 
       uploadTask.on('state_changed', (snapshot) => {
 
+        this.uploadProgress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+
       }, (error: Error) => {
         //catch error
       }, () => {
@@ -64,6 +67,7 @@ export class UserProfilePage {
     }).then(() => {
       this.canEdit = false;
       this.filePhoto = undefined;
+      this.uploadProgress = 0;
     })
   }
 
