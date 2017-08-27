@@ -1,3 +1,4 @@
+import { UserProfilePage } from './../pages/user-profile/user-profile';
 import { UserMenuComponent } from './../components/user-menu/user-menu.component';
 import { UserInfoComponent } from './../components/user-info/user-info.component';
 import { MessageBoxComponent } from './../components/message-box/message-box.component';
@@ -46,7 +47,8 @@ const firebaseAppConfig : FirebaseAppConfig = {
     SigninPage,
     SignupPage,
     UserInfoComponent,
-    UserMenuComponent
+    UserMenuComponent,
+    UserProfilePage
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,8 @@ const firebaseAppConfig : FirebaseAppConfig = {
     HomePage,
     MyApp,
     SigninPage,
-    SignupPage
+    SignupPage,
+    UserProfilePage
   ],
   providers: [
     AuthService,

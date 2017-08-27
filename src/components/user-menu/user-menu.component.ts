@@ -1,3 +1,4 @@
+import { UserProfilePage } from './../../pages/user-profile/user-profile';
 import { User } from './../../models/user.model';
 import { AuthService } from './../../providers/auth.service';
 import { AlertController, App, MenuController } from 'ionic-angular';
@@ -22,7 +23,7 @@ export class UserMenuComponent extends BaseComponent {
   }
 
   onProfile():void{
-    console.log("user profile");
+    this.navCtrl.push(UserProfilePage);
   }
 
 }
