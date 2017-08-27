@@ -1,3 +1,4 @@
+import { ProgressBarComponent } from './../components/progress-bar/progress-bar.component';
 import { UserProfilePage } from './../pages/user-profile/user-profile';
 import { UserMenuComponent } from './../components/user-menu/user-menu.component';
 import { UserInfoComponent } from './../components/user-info/user-info.component';
@@ -44,6 +45,7 @@ const firebaseAppConfig : FirebaseAppConfig = {
     HomePage,
     MessageBoxComponent,
     MyApp,
+    ProgressBarComponent,
     SigninPage,
     SignupPage,
     UserInfoComponent,
