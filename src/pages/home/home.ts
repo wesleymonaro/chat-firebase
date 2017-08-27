@@ -7,7 +7,7 @@ import { User } from './../../models/user.model';
 import { FirebaseListObservable } from 'angularfire2';
 import { SignupPage } from './../signup/signup';
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, MenuController } from 'ionic-angular';
 
 import firebase from 'firebase';
 
@@ -24,6 +24,7 @@ export class HomePage {
   constructor(
     public authService: AuthService,
     public chatService: ChatService,
+    public menuCtrl : MenuController,
     public navCtrl: NavController,
     public userService: UserService
   ) {
@@ -37,6 +38,8 @@ export class HomePage {
   ionViewDidLoad() {
     this.chats = this.chatService.chats;
     this.users = this.userService.users;
+    
+    this.menuCtrl.enable(true, 'user-menu');
   }
 
   filterItems(event: any): void {
